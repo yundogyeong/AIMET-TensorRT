@@ -10,22 +10,22 @@ def unpickle(file):
     return dict
 
 
-with open('/workspace/aimet/data/cifar-10-batches-py/batches.meta', 'rb') as infile:
+with open('./data/cifar-10-batches-py/batches.meta', 'rb') as infile:
     data = pickle.load(infile, encoding='latin1')
     classes = data['label_names']
 
 # 클래스 별 폴더 생성
-os.mkdir('/workspace/aimet/data/cifar-10-batches-py/train')
-os.mkdir('/workspace/aimet/data/cifar-10-batches-py/test')
+os.mkdir('./data/cifar-10-batches-py/train')
+os.mkdir('./data/cifar-10-batches-py/test')
 for name in classes:
-    os.mkdir('/workspace/aimet/data/cifar-10-batches-py/train/{}'.format(name))
-    os.mkdir('/workspace/aimet/data/cifar-10-batches-py/test/{}'.format(name))
+    os.mkdir('./data/cifar-10-batches-py/train/{}'.format(name))
+    os.mkdir('./data/cifar-10-batches-py/test/{}'.format(name))
     
 # Trainset Unpacking
 # data_batch 파일들 순서대로 unpacking
 for i in range(1, 6):
     print('Unpacking Train File {}/{}'.format(i, 5))
-    train_file = unpickle('/workspace/aimet/data/cifar-10-batches-py/data_batch_{}'.format(i))
+    train_file = unpickle('./data/cifar-10-batches-py/data_batch_{}'.format(i))
 
     train_data = train_file[b'data']
 
@@ -48,13 +48,13 @@ for i in range(1, 6):
         train_image = Image.fromarray(train_data_reshape[idx])
         
         # 클래스 별 폴더에 파일 저장
-        train_image.save('/workspace/aimet/data/cifar-10-batches-py/train/{}/{}'.format(classes[train_label], train_filename[idx].decode('utf8')))
+        train_image.save('./data/cifar-10-batches-py/train/{}/{}'.format(classes[train_label], train_filename[idx].decode('utf8')))
         
 # -----------------------------------------------------------------------------------------
 
 # Testset Unpacking
 print('Unpacking Test File')
-test_file = unpickle('/workspace/aimet/data/cifar-10-batches-py/test_batch')
+test_file = unpickle('./data/cifar-10-batches-py/test_batch')
 
 test_data = test_file[b'data']
 
@@ -77,6 +77,6 @@ for idx in range(10000):
     test_image = Image.fromarray(test_data_reshape[idx])
     
     # 클래스 별 폴더에 파일 저장
-    test_image.save('/workspace/aimet/data/cifar-10-batches-py/test/{}/{}'.format(classes[test_label], test_filename[idx].decode('utf8')))
+    test_image.save('./data/cifar-10-batches-py/test/{}/{}'.format(classes[test_label], test_filename[idx].decode('utf8')))
 
 print('Unpacking Finish')

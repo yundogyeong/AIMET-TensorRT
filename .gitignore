@@ -6,3 +6,5 @@
 *.pkl
 /data
 /state_dicts
+*.cache
+/output
