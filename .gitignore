@@ -1,3 +1,8 @@
 *.trt
 *.onnx
-
+*.meta
+*.pyc
+*.html
+*.pkl
+/data
+/state_dicts
